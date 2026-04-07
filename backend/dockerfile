@@ -1,8 +1,32 @@
-FROM maven:3.8.3-openjdk-17
-COPY . /opt/
-WORKDIR /opt
-RUN mvn clean package 
-WORKDIR target/
+# Stage 1: Build
+FROM maven:3.8.3-openjdk-17 AS builder
+WORKDIR /app
+
+# Cache dependencies first for faster rebuilds
+COPY pom.xml .
+RUN mvn dependency:go-offline -q
+
+# Copy source and build JAR
+COPY src ./src
+RUN mvn clean package -DskipTests -q
+
+# Stage 2: Run
+FROM openjdk:17-jre-slim
+WORKDIR /app
+
+# Create non-root user for security
+RUN addgroup --system appgroup && \
+    adduser --system --ingroup appgroup appuser
+
+# Copy only JAR from builder stage
+COPY --from=builder /app/target/*.jar app.jar
+RUN chown appuser:appgroup app.jar
+
+USER appuser
 EXPOSE 8080
-ENTRYPOINT ["java","-jar"]
-CMD ["student-registration-backend-0.0.1-SNAPSHOT.jar"]
+
+# Health check for Kubernetes liveness probe
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:8080/api/health || exit 1
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
