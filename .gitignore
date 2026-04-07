@@ -1,0 +1,6 @@
+# ======================
+# Secrets & Environment Files
+# ======================
+.env
+*.env
+!.env.example
