@@ -17,25 +17,61 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    // CREATE - Register new student
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return userRepository.save(user);
+    public ResponseEntity<User> registerUser(@RequestBody User user) {
+        User saved = userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    // READ ALL - Get all students
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userRepository.findAll());
     }
 
-    // Delete user by ID
+    // READ ONE - Get student by ID
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        return userRepository.findById(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    // UPDATE - Update student by ID
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(
+            @PathVariable Long id,
+            @RequestBody User updatedUser) {
+        return userRepository.findById(id)
+            .map(user -> {
+                user.setName(updatedUser.getName());
+                user.setEmail(updatedUser.getEmail());
+                user.setCourse(updatedUser.getCourse());
+                user.setStudentClass(updatedUser.getStudentClass());
+                user.setPercentage(updatedUser.getPercentage());
+                user.setBranch(updatedUser.getBranch());
+                user.setMobileNumber(updatedUser.getMobileNumber());
+                return ResponseEntity.ok(userRepository.save(user));
+            })
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    // DELETE - Delete student by ID
     @DeleteMapping("/users/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            userRepository.deleteById(id);
-            return ResponseEntity.ok("User deleted successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
+        return userRepository.findById(id)
+            .map(user -> {
+                userRepository.deleteById(id);
+                return ResponseEntity.ok("User deleted successfully");
+            })
+            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("User not found"));
+    }
+
+    // HEALTH CHECK - For Kubernetes liveness probe
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.ok("Backend is healthy!");
     }
 }

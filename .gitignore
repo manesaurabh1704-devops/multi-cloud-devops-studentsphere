@@ -4,3 +4,48 @@
 .env
 *.env
 !.env.example
+
+# ======================
+# Java / Spring Boot
+# ======================
+backend/target/
+*.jar
+*.class
+*.log
+
+# ======================
+# Node.js / React
+# ======================
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# ======================
+# Docker
+# ======================
+.docker/
+
+# ======================
+# Terraform State
+# ======================
+**/.terraform/
+**/terraform.tfstate*
+**/terraform.tfstate.backup
+**/*.tfvars
+!**/*.tfvars.example
+
+# ======================
+# IDE / OS files
+# ======================
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# ======================
+# Logs & Temporary
+# ======================
+*.log
+*.tmp
