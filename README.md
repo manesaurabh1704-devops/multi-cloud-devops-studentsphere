@@ -355,7 +355,7 @@ This image displays the status of the nodes participating in the cluster.
 
 
 ### Full Pipeline Setup Guide
-[kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup)
+👉  [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup)
 ---
 ## ⚡ Phase 3 — Jenkins CI/CD Pipeline
 
