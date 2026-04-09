@@ -338,6 +338,41 @@ Internet → AWS LoadBalancer → Frontend Pods (x2) → Backend Pods (x2) → M
 | [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup) | Pure Kubernetes — Deployment, Service, Ingress, HPA, RBAC |
 
 ---
+## ⚡ Phase 3 — Jenkins CI/CD Pipeline
+
+### What
+Automated CI/CD pipeline — code push se EKS deployment tak fully automated.
+
+### Why
+- Manual docker build + push + deploy = time waste + human error
+- Jenkins pipeline = automatic + consistent + auditable
+- Trivy scan = vulnerable images never reach production
+- Build number tagging = easy rollback
+
+### Pipeline Flow
+GitHub Push → Jenkins → Maven Build → npm Build → Trivy Scan → Docker Build → DockerHub Push → EKS Deploy
+
+### Output / Proof
+
+#### Pipeline Success
+![Pipeline Success](screenshots/phase3/01-pipeline-success.png)
+
+#### All Stages Green
+![Console Output](screenshots/phase3/02-console-output.png)
+
+### Full Pipeline Setup Guide
+👉 [ci-cd-devops-pipelines](https://github.com/manesaurabh1704-devops/ci-cd-devops-pipelines)
+
+EOF
+
+# Phase 3 status update
+sed -i 's/| ⏳ Phase 3 | CI\/CD Jenkins | Pending |/| ✅ Phase 3 | CI\/CD Jenkins | Complete |/' README.md
+
+git add .
+git commit -m "docs(phase3): add CI/CD section with proof and link to ci-cd repo"
+git push origin main
+
+
 
 ## 🔗 Related Repositories
 
