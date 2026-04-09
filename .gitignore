@@ -48,4 +48,4 @@ Thumbs.db
 # Logs & Temporary
 # ======================
 *.log
-*.tmp
+*.tmp.env
