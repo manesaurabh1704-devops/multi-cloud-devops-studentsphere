@@ -317,6 +317,28 @@ The `version: "3.8"` line will be removed in a future cleanup.
 
 ---
 
+## ⚡ Phase 2 — AWS EKS Deployment
+
+### What
+Full-stack app deployed on AWS EKS Managed Kubernetes with persistent
+storage, load balancing, and self-healing pods.
+
+### Why
+- Docker Compose = single server = not production grade
+- EKS = managed Kubernetes = auto-scaling + self-healing
+- LoadBalancer = public URL = accessible from anywhere
+- EBS volume = data persists even if pod restarts
+- 2 replicas = no single point of failure
+
+### Architecture
+Internet → AWS LoadBalancer → Frontend Pods (x2) → Backend Pods (x2) → MariaDB StatefulSet → EBS Volume (5Gi)
+
+### How / 🐛 Phase 2 — Troubleshooting /📸 Output / Proof
+
+| [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup) | Pure Kubernetes — Deployment, Service, Ingress, HPA, RBAC |
+
+---
+
 ## 🔗 Related Repositories
 
 | Repository | Purpose |
