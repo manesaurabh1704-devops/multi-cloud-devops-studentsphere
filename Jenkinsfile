@@ -7,6 +7,8 @@ pipeline {
         AWS_REGION = 'ap-south-1'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         K8S_NAMESPACE = 'studentsphere'
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+        PATH = "/usr/lib/jvm/java-17-openjdk-amd64/bin:${env.PATH}"
     }
 
     stages {
@@ -22,8 +24,7 @@ pipeline {
             steps {
                 echo 'Building Backend JAR...'
                 dir('backend') {
-                    
-                    sh 'mvn clean package -DskipTests'
+                    sh 'export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 && java -version && mvn clean package -DskipTests'
                 }
             }
         }
