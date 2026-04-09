@@ -19,7 +19,7 @@ pipeline {
         stage('Backend Maven Build') {
             steps {
                 dir('backend') {
-                    // FORCE PERMISSION HERE
+                    sh "ls -la"
                     sh 'chmod +x mvnw'
                     sh './mvnw clean package -DskipTests'
                 }
