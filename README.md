@@ -254,36 +254,8 @@ FROM eclipse-temurin:17-jre-jammy
 
 ---
 
-### Problem 2 — Frontend JSX Build Error
 
-#### Error
-```
-ERROR: Unexpected closing "tr" tag does not match opening "td" tag
-ERROR: Unterminated regular expression
-```
-
-#### Root Cause
-In `RegistrationForm.jsx`, the Actions column `<td>` was opened but never closed before `</tr>`:
-```jsx
-// WRONG
-<td>
-</tr>
-
-// CORRECT
-<td>
-  <button onClick={() => handleDelete(user.id)} className="delete-button">
-    Delete
-  </button>
-</td>
-</tr>
-```
-
-#### Solution
-Properly closed the `<td>` tag and added the Delete button inside it.
-
----
-
-### Problem 3 — Student Data Not Saving on EC2
+### Problem 2 — Student Data Not Saving on EC2
 
 #### Root Cause
 `VITE_API_URL` was pointing to `localhost` which does not work on EC2,
@@ -314,30 +286,9 @@ location /api/ {
 
 ---
 
-### Problem 4 — `no configuration file provided` Error
 
-#### Error
-```
-no configuration file provided: not found
-```
 
-#### Root Cause
-Running `docker compose up` from wrong directory — `compose.yml` is in the root folder.
-
-#### Solution
-```bash
-# WRONG
-cd backend/
-docker compose up
-
-# CORRECT
-cd multi-cloud-devops-studentsphere/
-docker compose up --build
-```
-
----
-
-### Problem 5 — `version` is Obsolete Warning
+### Problem 3 — `version` is Obsolete Warning
 
 #### Warning
 ```
