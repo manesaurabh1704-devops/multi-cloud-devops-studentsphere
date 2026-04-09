@@ -22,8 +22,8 @@ pipeline {
             steps {
                 echo 'Building Backend JAR...'
                 dir('backend') {
-                    sh 'chmod +x mvnw'
-                    sh './mvnw clean package -DskipTests'
+                    
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
