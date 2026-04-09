@@ -85,8 +85,8 @@ multi-cloud-devops-studentsphere/
 | Phase | Topic | Status |
 |---|---|---|
 | ✅ Phase 1 | Local Docker Setup | Complete |
-| 🔄 Phase 2 | AWS EKS Deployment | In Progress |
-| ⏳ Phase 3 | CI/CD Jenkins | Pending |
+| ✅ Phase 2 | AWS EKS Deployment | Complete |
+| 🔄 Phase 3 | CI/CD Jenkins | Pending |
 | ⏳ Phase 4 | Terraform IaC | Pending |
 | ⏳ Phase 5 | Advanced K8s (HPA + Canary + Blue-Green) | Pending |
 | ⏳ Phase 6 | GitOps ArgoCD | Pending |
