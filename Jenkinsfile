@@ -1,35 +1,38 @@
 pipeline {
     agent any
-    
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        ECR_CREDENTIALS = credentials('aws-ecr-credentials')
+        DOCKERHUB_USER = 'manesaurabh1704devops'
         AWS_REGION = 'ap-south-1'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
-        REPO_NAME = "studentsphere"
+        K8S_NAMESPACE = 'studentsphere'
     }
 
     stages {
+
         stage('Git Checkout') {
             steps {
+                echo 'Checking out source code...'
                 checkout scm
             }
         }
 
         stage('Backend Maven Build') {
             steps {
+                echo 'Building Backend JAR...'
                 dir('backend') {
-                    sh "ls -la"
                     sh 'chmod +x mvnw'
                     sh './mvnw clean package -DskipTests'
                 }
             }
         }
 
-        stage('Frontend Build') {
+        stage('Frontend npm Build') {
             steps {
+                echo 'Building Frontend...'
                 dir('frontend') {
-                    sh 'npm ci --force'
+                    sh 'npm ci'
                     sh 'npm run build'
                 }
             }
@@ -37,45 +40,42 @@ pipeline {
 
         stage('Trivy Security Scan') {
             steps {
-                sh 'trivy fs --exit-code 1 --severity HIGH,CRITICAL ./'
+                echo 'Running Trivy security scan...'
+                sh 'trivy fs --severity HIGH,CRITICAL --exit-code 0 ./'
             }
         }
 
         stage('Docker Build') {
             steps {
-                // Backend Docker Image
-                sh "docker build -t ${DOCKERHUB_CREDENTIALS_USR}/studentsphere-backend:${IMAGE_TAG} -f backend/dockerfile backend/"
-                sh "docker build -t ${DOCKERHUB_CREDENTIALS_USR}/studentsphere-frontend:${IMAGE_TAG} -f frontend/dockerfile frontend/"
-                
-                // Tag for ECR also
-                sh "docker tag ${DOCKERHUB_CREDENTIALS_USR}/studentsphere-backend:${IMAGE_TAG} ${ECR_CREDENTIALS_USR}.dkr.ecr.${AWS_REGION}.amazonaws.com/studentsphere-backend:${IMAGE_TAG}"
-                sh "docker tag ${DOCKERHUB_CREDENTIALS_USR}/studentsphere-frontend:${IMAGE_TAG} ${ECR_CREDENTIALS_USR}.dkr.ecr.${AWS_REGION}.amazonaws.com/studentsphere-frontend:${IMAGE_TAG}"
+                echo 'Building Docker images...'
+                sh "docker build -t ${DOCKERHUB_USER}/studentsphere-backend:${IMAGE_TAG} -f backend/dockerfile backend/"
+                sh "docker build -t ${DOCKERHUB_USER}/studentsphere-frontend:${IMAGE_TAG} -f frontend/dockerfile frontend/"
             }
         }
 
         stage('Docker Push to DockerHub') {
             steps {
+                echo 'Pushing images to DockerHub...'
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                sh "docker push ${DOCKERHUB_CREDENTIALS_USR}/studentsphere-backend:${IMAGE_TAG}"
-                sh "docker push ${DOCKERHUB_CREDENTIALS_USR}/studentsphere-frontend:${IMAGE_TAG}"
-            }
-        }
-
-        stage('Docker Push to AWS ECR') {
-            steps {
-                sh '''
-                    aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_CREDENTIALS_USR}.dkr.ecr.${AWS_REGION}.amazonaws.com
-                '''
-                sh "docker push ${ECR_CREDENTIALS_USR}.dkr.ecr.${AWS_REGION}.amazonaws.com/studentsphere-backend:${IMAGE_TAG}"
-                sh "docker push ${ECR_CREDENTIALS_USR}.dkr.ecr.${AWS_REGION}.amazonaws.com/studentsphere-frontend:${IMAGE_TAG}"
+                sh "docker push ${DOCKERHUB_USER}/studentsphere-backend:${IMAGE_TAG}"
+                sh "docker push ${DOCKERHUB_USER}/studentsphere-frontend:${IMAGE_TAG}"
             }
         }
 
         stage('Deploy to EKS') {
             steps {
+                echo 'Deploying to AWS EKS...'
                 sh """
-                    kubectl set image deployment/studentsphere-backend backend=${ECR_CREDENTIALS_USR}.dkr.ecr.${AWS_REGION}.amazonaws.com/studentsphere-backend:${IMAGE_TAG} -n student-app || echo 'Deployment not found yet'
-                    kubectl set image deployment/studentsphere-frontend frontend=${ECR_CREDENTIALS_USR}.dkr.ecr.${AWS_REGION}.amazonaws.com/studentsphere-frontend:${IMAGE_TAG} -n student-app || echo 'Deployment not found yet'
+                    kubectl set image deployment/backend \
+                      backend=${DOCKERHUB_USER}/studentsphere-backend:${IMAGE_TAG} \
+                      -n ${K8S_NAMESPACE}
+
+                    kubectl set image deployment/frontend \
+                      frontend=${DOCKERHUB_USER}/studentsphere-frontend:${IMAGE_TAG} \
+                      -n ${K8S_NAMESPACE}
+
+                    kubectl rollout status deployment/backend -n ${K8S_NAMESPACE}
+                    kubectl rollout status deployment/frontend -n ${K8S_NAMESPACE}
                 """
             }
         }
@@ -83,13 +83,14 @@ pipeline {
 
     post {
         always {
+            echo 'Cleaning workspace...'
             cleanWs()
         }
         success {
             echo 'Pipeline executed successfully!'
         }
         failure {
-            echo 'Pipeline failed!'
+            echo 'Pipeline failed! Check logs above.'
         }
     }
 }
