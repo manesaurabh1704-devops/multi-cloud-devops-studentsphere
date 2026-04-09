@@ -363,16 +363,6 @@ GitHub Push → Jenkins → Maven Build → npm Build → Trivy Scan → Docker 
 ### Full Pipeline Setup Guide
 👉 [ci-cd-devops-pipelines](https://github.com/manesaurabh1704-devops/ci-cd-devops-pipelines)
 
-EOF
-
-# Phase 3 status update
-sed -i 's/| ⏳ Phase 3 | CI\/CD Jenkins | Pending |/| ✅ Phase 3 | CI\/CD Jenkins | Complete |/' README.md
-
-git add .
-git commit -m "docs(phase3): add CI/CD section with proof and link to ci-cd repo"
-git push origin main
-
-
 
 ## 🔗 Related Repositories
 
