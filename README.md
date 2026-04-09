@@ -3,7 +3,7 @@
 > Production-grade multi-cloud DevOps project — React + Spring Boot + MariaDB deployed across AWS, Azure, and GCP.
 > Built to demonstrate real-world DevOps skills — CI/CD, GitOps, Security, Monitoring, and Multi-Cloud deployment.
 
-![App Working](screenshots/phase1/03-app-frontend.png)
+![App Working](screenshots/phase1/0-app-frontend.png)
 
 ---
 
