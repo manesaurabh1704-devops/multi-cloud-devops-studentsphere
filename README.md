@@ -86,8 +86,8 @@ multi-cloud-devops-studentsphere/
 |---|---|---|
 | ✅ Phase 1 | Local Docker Setup | Complete |
 | ✅ Phase 2 | AWS EKS Deployment | Complete |
-| 🔄 Phase 3 | CI/CD Jenkins | Pending |
-| ⏳ Phase 4 | Terraform IaC | Pending |
+| ✅ Phase 3 | CI/CD Jenkins | Complete|
+| 🔄 Phase 4 | Terraform IaC | Pending |
 | ⏳ Phase 5 | Advanced K8s (HPA + Canary + Blue-Green) | Pending |
 | ⏳ Phase 6 | GitOps ArgoCD | Pending |
 | ⏳ Phase 7 | Security (RBAC + Trivy + Network Policies) | Pending |
@@ -333,10 +333,29 @@ storage, load balancing, and self-healing pods.
 ### Architecture
 Internet → AWS LoadBalancer → Frontend Pods (x2) → Backend Pods (x2) → MariaDB StatefulSet → EBS Volume (5Gi)
 
-### How / 🐛 Phase 2 — Troubleshooting /📸 Output / Proof
+### How 📸 Output / Proof
 
-| [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup) | Pure Kubernetes — Deployment, Service, Ingress, HPA, RBAC |
+#### Kubernetes Validation
 
+Here are the validation screenshots from Phase 2:
+
+**1. Verification of all resources in Kubernetes**
+
+This image shows that all pods, services, and other resources are running successfully.
+![kubectl get all output](screenshots/phase2/01-kubectl-get-all.png)
+
+<br>
+
+**2. Kubernetes Nodes Status**
+
+This image displays the status of the nodes participating in the cluster.
+![kubectl get nodes output](screenshots/phase2/02-kubectl-get-nodes.png)
+
+
+
+
+### Full Pipeline Setup Guide
+[kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup)
 ---
 ## ⚡ Phase 3 — Jenkins CI/CD Pipeline
 
@@ -352,7 +371,7 @@ Automated CI/CD pipeline — code push se EKS deployment tak fully automated.
 ### Pipeline Flow
 GitHub Push → Jenkins → Maven Build → npm Build → Trivy Scan → Docker Build → DockerHub Push → EKS Deploy
 
-### Output / Proof
+### 📸 Output / Proof
 
 #### Pipeline Success
 ![Pipeline Success](screenshots/phase3/01-pipeline-success.png)
