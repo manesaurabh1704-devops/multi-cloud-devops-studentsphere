@@ -1,37 +1,62 @@
 # 🚀 Multi-Cloud DevOps StudentSphere
 
-> Production-grade multi-cloud DevOps project — React + Spring Boot + MariaDB deployed across AWS, Azure, and GCP.
-> Built to demonstrate real-world DevOps skills — CI/CD, GitOps, Security, Monitoring, and Multi-Cloud deployment.
+> A production-grade, multi-cloud DevOps project built to demonstrate real-world engineering skills —
+> from local Docker setup to AWS EKS, Jenkins CI/CD, GitOps, Zero-Trust Security, and Observability.
+> The same app runs on AWS, Azure, and GCP — proving cloud-agnostic deployment skills.
 
 ![App Working](screenshots/phase1/0-app-frontend.png)
 
 ---
 
+## 🏗️ Application Overview
+
+**StudentSphere** is a full-stack student registration system.
+
 ## 🏗️ Application Architecture
 
 ```
-Browser → Frontend (Nginx:80) → Backend (Spring Boot:8080) → MariaDB (3306)
+Browser → React (Nginx:80) → Spring Boot (8080) → MariaDB (3306)
 ```
-
----
 
 ## 📚 Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 18 + Vite + Nginx |
-| Backend | Spring Boot 3.3.5 + Java 17 |
-| Database | MariaDB 10.11 |
-| Container | Docker + Docker Compose |
-| Cloud | AWS EKS (Phase 2) |
-| CI/CD | Jenkins (Phase 3) |
-| IaC | Terraform (Phase 4) |
-| Advanced K8s | HPA + Canary + Blue-Green + Helm (Phase 5) |
-| GitOps | ArgoCD (Phase 6) |
-| Security | RBAC + Trivy + Network Policies (Phase 7) |
-| Monitoring | Prometheus + Grafana + Alertmanager (Phase 8) |
-| Logging | Fluent Bit + Elasticsearch + Kibana (Phase 8) |
-| Multi-Cloud | Azure AKS + GCP GKE (Phase 9) |
+| Layer | Technology | Why |
+|---|---|---|
+| Frontend | React 18 + Vite + Nginx | Modern SPA with reverse proxy |
+| Backend | Spring Boot 3.3.5 + Java 17 | Production-grade REST API |
+| Database | MariaDB 10.11 | Relational DB with persistent storage |
+| Container | Docker + Docker Compose | Portable, reproducible builds |
+| Orchestration | Kubernetes (EKS/AKS/GKE) | Auto-scaling, self-healing |
+| CI/CD | Jenkins | Automated build → test → deploy |
+| IaC | Terraform | Reproducible cloud infrastructure |
+| GitOps | ArgoCD | Git as single source of truth |
+| Security | RBAC + Trivy + Network Policies | Zero-trust approach |
+| Monitoring | Prometheus + Grafana + Alertmanager | Full observability |
+| Multi-Cloud | AWS + Azure + GCP | Cloud-agnostic deployment |
+
+---
+
+## ☁️ Why Multi-Cloud?
+
+```
+Single Cloud Risk:     If AWS goes down → App goes down
+Multi-Cloud Benefit:   AWS down → Switch to Azure or GCP instantly
+
+Real-world companies (Netflix, Uber, Airbnb) use multi-cloud for:
+→ Vendor lock-in avoidance
+→ Cost optimization (use cheapest cloud per region)
+→ Compliance (some data must stay in specific regions)
+→ Disaster recovery
+```
+
+This project deploys the **same application** on:
+```
+✅ AWS  — EKS (Primary)
+✅ Azure — AKS (Secondary)
+✅ GCP  — GKE (Tertiary)
+```
+
+The same Kubernetes manifests work on all three — only the cluster endpoint changes.
 
 ---
 
@@ -41,41 +66,35 @@ Browser → Frontend (Nginx:80) → Backend (Spring Boot:8080) → MariaDB (3306
 multi-cloud-devops-studentsphere/
 ├── backend/                    # Spring Boot REST API
 │   ├── src/                    # Java source code
-│   │   ├── controller/         # REST API endpoints
+│   │   ├── controller/         # REST endpoints
 │   │   ├── model/              # Entity classes
 │   │   ├── repository/         # Database layer
 │   │   └── config/             # CORS configuration
 │   ├── dockerfile              # Multi-stage Docker build
 │   └── pom.xml                 # Maven dependencies
 ├── frontend/                   # React + Vite + Nginx
-│   ├── src/                    # React source code
+│   ├── src/
 │   │   ├── components/         # UI components
 │   │   ├── api/                # API service layer
 │   │   └── hooks/              # Custom React hooks
 │   ├── dockerfile              # Multi-stage Docker build
-│   └── nginx.conf              # Nginx reverse proxy config
+│   └── nginx.conf              # Reverse proxy config
 ├── k8s/                        # Kubernetes manifests
-│   ├── aws/                    # AWS EKS specific
-│   ├── azure/                  # Azure AKS specific
-│   └── gcp/                    # GCP GKE specific
+│   ├── aws/                    # AWS EKS manifests
+│   ├── azure/                  # Azure AKS manifests
+│   └── gcp/                    # GCP GKE manifests
 ├── terraform/                  # Infrastructure as Code
-│   ├── aws/                    # AWS infrastructure
-│   ├── azure/                  # Azure infrastructure
-│   └── gcp/                    # GCP infrastructure
-├── jenkins/                    # CI/CD pipelines
-├── monitoring/                 # Prometheus + Grafana
-│   ├── prometheus/
-│   ├── grafana/
-│   └── alertmanager/
-├── logging/                    # EFK Stack
-│   ├── fluentbit/
-│   └── elasticsearch/
-├── helm/                       # Helm charts
-│   └── studentsphere/
+│   ├── aws/                    # AWS VPC + EKS + ECR
+│   ├── azure/                  # Azure AKS (Phase 9)
+│   └── gcp/                    # GCP GKE (Phase 9)
+├── docs/                       # Phase-wise documentation
+│   ├── PHASE5-ADVANCED-K8S.md
+│   ├── PHASE6-ARGOCD.md
+│   ├── PHASE7-SECURITY.md
+│   └── PHASE8-OBSERVABILITY.md
 ├── screenshots/                # Phase-wise proof
-├── docs/                       # Phase documentation
 ├── .env.example                # Environment variables template
-└── compose.yml                 # Local Docker Compose setup
+└── compose.yml                 # Local Docker Compose
 ```
 
 ---
@@ -86,28 +105,52 @@ multi-cloud-devops-studentsphere/
 |---|---|---|
 | ✅ Phase 1 | Local Docker Setup | Complete |
 | ✅ Phase 2 | AWS EKS Deployment | Complete |
-| ✅ Phase 3 | CI/CD Jenkins | Complete|
+| ✅ Phase 3 | CI/CD Jenkins | Complete |
 | ✅ Phase 4 | Terraform IaC | Complete |
 | ✅ Phase 5 | Advanced K8s (HPA + Canary + Blue-Green) | Complete |
 | ✅ Phase 6 | GitOps ArgoCD | Complete |
 | ✅ Phase 7 | Security (RBAC + Trivy + Network Policies) | Complete |
-| ✅ Phase 8 | Observability (Prometheus + Grafana + EFK) | Complete |
-| 🔄 Phase 9 | Multi-Cloud (Azure AKS + GCP GKE) | Pending |
+| ✅ Phase 8 | Observability (Prometheus + Grafana + Alertmanager) | Complete |
+| ✅ Phase 9 | Multi-Cloud (Azure AKS + GCP GKE) | Complete |
+
+---
+
+## 🏆 Achievements
+
+| Category | Achievement |
+|---|---|
+| 🐳 Docker | Backend image: 700MB → 200MB (3.5x smaller via multi-stage build) |
+| 🐳 Docker | Frontend image: 400MB → 25MB (16x smaller via multi-stage build) |
+| ⚙️ Kubernetes | HPA auto-scales 2 → 5 pods on CPU/Memory threshold |
+| ⚙️ Kubernetes | Zero-downtime Blue-Green switch verified |
+| ⚙️ Kubernetes | Canary deployment — 33% traffic to new version |
+| 🔒 Security | Trivy scan: 12 backend + 20 frontend vulnerabilities identified |
+| 🔒 Security | Network Policies: Default deny-all + selective allow rules |
+| 🔒 Security | RBAC: Least privilege ServiceAccounts for every pod |
+| 📊 Observability | 31 Prometheus scrape targets — all UP |
+| 📊 Observability | Grafana dashboards — Cluster CPU 3.23%, Memory 54.2% |
+| 🚀 CI/CD | Jenkins pipeline: Code push → Build → Scan → Deploy in ~3m 37s |
+| 🚀 CI/CD | ArgoCD GitOps: Git push → Auto-sync → EKS deploy |
+| ☁️ Multi-Cloud | Same app deployed on AWS EKS + Azure AKS + GCP GKE |
+| ☁️ Multi-Cloud | Cloud-agnostic Kubernetes manifests |
+
+---
 
 ---
 
 ## ⚡ Phase 1 — Local Docker Setup
 
 ### What
-Full-stack application (React + Spring Boot + MariaDB) running locally using Docker Compose.
-Single command brings up all three services with proper networking, health checks, and persistent storage.
+Full-stack app running locally using Docker Compose — single command brings up all three services.
 
 ### Why
-- Validate complete application works end-to-end before cloud deployment
-- Multi-stage Dockerfiles reduce image size significantly
-- Nginx reverse proxy handles frontend routing and API proxying
-- Environment variables used everywhere — no hardcoded credentials
-- Health checks ensure services start in correct order
+```
+Before cloud deployment — validate everything works locally
+Multi-stage Dockerfiles — smaller, faster, production-ready images
+Nginx reverse proxy — no CORS issues, clean API routing
+Environment variables — zero hardcoded credentials
+Health checks — services start in correct dependency order
+```
 
 ### How
 
@@ -235,72 +278,25 @@ http://localhost:80
 
 ### Problem 1 — `openjdk:17-jre-slim` Not Found
 
-#### Error
 ```
-failed to solve: openjdk:17-jre-slim: not found
+Error: failed to solve: openjdk:17-jre-slim: not found
+Fix:   FROM eclipse-temurin:17-jre-jammy
 ```
-
-#### Root Cause
-`openjdk` official Docker images have been deprecated on Docker Hub.
-
-#### Solution
-```dockerfile
-# BEFORE — WRONG
-FROM openjdk:17-jre-slim
-
-# AFTER — CORRECT
-FROM eclipse-temurin:17-jre-jammy
-```
-
----
-
 
 ### Problem 2 — Student Data Not Saving on EC2
 
-#### Root Cause
-`VITE_API_URL` was pointing to `localhost` which does not work on EC2,
-and hardcoded EC2 IP breaks when instance restarts:
-```bash
-# WRONG — does not work on EC2
-VITE_API_URL=http://localhost:8080/api
-
-# WRONG — breaks on instance restart
-VITE_API_URL=http://13.235.13.8:8080/api
 ```
-
-#### Solution
-Used Nginx reverse proxy instead of direct backend URL:
-```bash
-# CORRECT — Nginx proxies /api/ to backend container
-VITE_API_URL=/api
+Wrong: VITE_API_URL=http://localhost:8080/api  (breaks on EC2)
+Wrong: VITE_API_URL=http://13.x.x.x:8080/api  (breaks on restart)
+Fix:   VITE_API_URL=/api  (Nginx proxies to backend container)
 ```
-
-`nginx.conf` already had this configured:
-```nginx
-location /api/ {
-    proxy_pass http://backend:8080/api/;
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-}
-```
-
----
-
-
 
 ### Problem 3 — `version` is Obsolete Warning
 
-#### Warning
 ```
-compose.yml: `version` is obsolete
+Warning: compose.yml: `version` is obsolete
+Fix:    Just a warning — app works normally. version field deprecated in Compose v2.
 ```
-
-#### Root Cause
-Docker Compose v2 has deprecated the `version` field.
-
-#### Solution
-This is just a warning, not an error — application works normally.
-The `version: "3.8"` line will be removed in a future cleanup.
 
 ---
 
@@ -312,66 +308,91 @@ The `version: "3.8"` line will be removed in a future cleanup.
 | GET | `/api/users` | Get all students |
 | GET | `/api/users/{id}` | Get student by ID |
 | POST | `/api/register` | Register new student |
-| PUT | `/api/users/{id}` | Update student by ID |
-| DELETE | `/api/users/{id}` | Delete student by ID |
+| PUT | `/api/users/{id}` | Update student |
+| DELETE | `/api/users/{id}` | Delete student |
 
 ---
 
 ## ⚡ Phase 2 — AWS EKS Deployment
 
 ### What
-Full-stack app deployed on AWS EKS Managed Kubernetes with persistent
-storage, load balancing, and self-healing pods.
+Full-stack app deployed on AWS EKS — managed Kubernetes with persistent storage, load balancing, and self-healing pods.
 
 ### Why
-- Docker Compose = single server = not production grade
-- EKS = managed Kubernetes = auto-scaling + self-healing
-- LoadBalancer = public URL = accessible from anywhere
-- EBS volume = data persists even if pod restarts
-- 2 replicas = no single point of failure
+```
+Docker Compose = single server = not production-grade
+EKS = managed Kubernetes = auto-scaling + self-healing + HA
+LoadBalancer = public URL accessible from anywhere
+EBS volume = data persists even if pod restarts
+2 replicas = no single point of failure
+```
 
 ### Architecture
-Internet → AWS LoadBalancer → Frontend Pods (x2) → Backend Pods (x2) → MariaDB StatefulSet → EBS Volume (5Gi)
+```
+Internet
+    ↓
+AWS LoadBalancer
+    ↓
+Frontend Pods (Nginx x2)
+    ↓
+Backend Pods (Spring Boot x2)
+    ↓
+MariaDB StatefulSet (x1)
+    ↓
+EBS Persistent Volume (5Gi)
+```
 
-### How 📸 Output / Proof
+### Output / Proof
 
-#### Kubernetes Validation
+#### All Kubernetes Resources Running
+![kubectl get all](screenshots/phase2/01-kubectl-get-all.png)
 
-Here are the validation screenshots from Phase 2:
+#### Nodes Ready
+![kubectl get nodes](screenshots/phase2/02-kubectl-get-nodes.png)
 
-**1. Verification of all resources in Kubernetes**
+### Full Setup Guide
+👉 [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup)
 
-This image shows that all pods, services, and other resources are running successfully.
-![kubectl get all output](screenshots/phase2/01-kubectl-get-all.png)
-
-<br>
-
-**2. Kubernetes Nodes Status**
-
-This image displays the status of the nodes participating in the cluster.
-![kubectl get nodes output](screenshots/phase2/02-kubectl-get-nodes.png)
-
-
-
-
-### Full Pipeline Setup Guide
-👉  [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup)
 ---
+
 ## ⚡ Phase 3 — Jenkins CI/CD Pipeline
 
 ### What
-Automated CI/CD pipeline — code push se EKS deployment tak fully automated.
+Automated CI/CD pipeline — from code push to EKS deployment, fully automated.
 
 ### Why
-- Manual docker build + push + deploy = time waste + human error
-- Jenkins pipeline = automatic + consistent + auditable
-- Trivy scan = vulnerable images never reach production
-- Build number tagging = easy rollback
+```
+Manual workflow:
+  Developer → docker build → docker push → kubectl apply → Done
+  Problem: Slow + error-prone + no security scanning
+
+Jenkins pipeline:
+  Git Push → Maven Build → npm Build → Trivy Scan → 
+  Docker Build → DockerHub Push → EKS Deploy
+  Benefit: Fast + consistent + secure + auditable
+```
 
 ### Pipeline Flow
-GitHub Push → Jenkins → Maven Build → npm Build → Trivy Scan → Docker Build → DockerHub Push → EKS Deploy
 
-### 📸 Output / Proof
+```
+Stage 1: Git Checkout       — Pull latest code from GitHub
+Stage 2: Maven Build        — Compile Spring Boot JAR
+Stage 3: npm Build          — Build React production bundle
+Stage 4: Trivy Scan         — Scan Docker images for vulnerabilities
+Stage 5: Docker Build       — Build multi-stage images
+Stage 6: DockerHub Push     — Push images with build number tag
+Stage 7: EKS Deploy         — kubectl apply to update deployments
+```
+
+### Build Stats
+```
+Total build time: ~3 min 37 sec
+Stages: 7
+Trivy scan: Integrated (blocks CRITICAL vulnerabilities)
+Image tagging: Build number based (easy rollback)
+```
+
+### Output / Proof
 
 #### Pipeline Success
 ![Pipeline Success](screenshots/phase3/01-pipeline-success.png)
@@ -387,18 +408,29 @@ GitHub Push → Jenkins → Maven Build → npm Build → Trivy Scan → Docker 
 ## ⚡ Phase 4 — Terraform Infrastructure as Code
 
 ### What
-Complete AWS infrastructure defined as code using Terraform — VPC, EKS, ECR all provisioned with single command.
+Complete AWS infrastructure defined as code — VPC, EKS, ECR provisioned with a single command.
 
 ### Why
-- Manual eksctl = not reproducible
-- Terraform = version controlled + reproducible + team friendly
-- Same code reusable for Azure and GCP in Phase 9
-- Industry standard IaC tool
+```
+Without Terraform (Manual):
+  eksctl create cluster ... (not reproducible)
+  Manual VPC setup (error-prone)
+  No version control for infra
+  
+With Terraform:
+  terraform apply = entire infra in 15 minutes
+  Version controlled infrastructure
+  Same code reusable for Azure + GCP
+  Team can review infra changes like code
+```
 
 ### Resources Created (24 total)
-VPC + Subnets (6) + IGW + Route Tables
-EKS Cluster + Node Group + IAM Roles (3)
-ECR Repositories (2) + Lifecycle Policies (2)
+
+```
+Networking:   VPC + 6 Subnets + IGW + Route Tables
+Compute:      EKS Cluster + Node Group + IAM Roles (3)
+Registry:     ECR Repositories (2) + Lifecycle Policies (2)
+```
 
 ### Output / Proof
 
@@ -422,10 +454,13 @@ ECR Repositories (2) + Lifecycle Policies (2)
 HPA auto-scaling + Canary deployment + Blue-Green zero downtime deployment on AWS EKS.
 
 ### Why
-- HPA = app automatically scales with load
-- Canary = safely test new versions on small traffic
-- Blue-Green = instant switch with zero downtime
+```
+HPA:        Load increases → pods auto-scale 2→5 → handle traffic spike
+Canary:     Test new version on 33% traffic → no risk to 67% users
+Blue-Green: Switch 100% traffic instantly → zero downtime deployment
+```
 
+### Output / Proof
 
 #### HPA Working — Auto Scaling
 ![HPA Working](screenshots/phase5/01-hpa-working.png)
@@ -437,7 +472,7 @@ HPA auto-scaling + Canary deployment + Blue-Green zero downtime deployment on AW
 ![Blue-Green Switch](screenshots/phase5/02-blue-green-switch.png)
 
 #### All Deployments Running
-![All Deployments](screenshots/phase5/03-all-deployments.png)"""
+![All Deployments](screenshots/phase5/03-all-deployments.png)
 
 ### Full Documentation
 👉 [docs/PHASE5-ADVANCED-K8S.md](docs/PHASE5-ADVANCED-K8S.md)
@@ -450,10 +485,14 @@ HPA auto-scaling + Canary deployment + Blue-Green zero downtime deployment on AW
 ArgoCD watches GitHub repo — automatically deploys to EKS on every git push.
 
 ### Why
-- No manual kubectl apply needed
-- Git is single source of truth
-- Auto self-heal if cluster drifts
-- Full visibility via UI
+```
+Without GitOps:
+  Developer → kubectl apply (manual, error-prone, no audit trail)
+
+With GitOps (ArgoCD):
+  Developer → git push → ArgoCD detects → Auto-deploy → EKS
+  Benefits: Audit trail + rollback + self-heal + single source of truth
+```
 
 ### Output / Proof
 
@@ -480,9 +519,28 @@ ArgoCD watches GitHub repo — automatically deploys to EKS on every git push.
 RBAC + Network Policies + Trivy Image Scanning — Zero Trust security on AWS EKS.
 
 ### Why
-- RBAC = Least privilege access for every pod
-- Network Policies = Pod-to-pod firewall rules
-- Trivy = Vulnerability scanning before deployment
+```
+Zero Trust = "Never trust, always verify"
+
+Without Security:
+  Any pod can access any resource
+  Frontend can directly connect to MariaDB
+  Vulnerable images deployed to production
+
+With Zero Trust:
+  RBAC: Each pod has minimum required permissions only
+  Network Policies: Frontend → Backend → MariaDB (strictly enforced)
+  Trivy: Vulnerabilities caught before deployment
+```
+
+### Scan Results Summary
+```
+Backend Image:  12 vulnerabilities (HIGH: 11, CRITICAL: 1)
+                → Tomcat 10.1.31 (fix: upgrade to 10.1.35+)
+
+Frontend Image: 20 vulnerabilities (HIGH: 17, CRITICAL: 3)
+                → Alpine 3.19.1 (fix: upgrade to 3.20+)
+```
 
 ### Output / Proof
 
@@ -501,7 +559,6 @@ RBAC + Network Policies + Trivy Image Scanning — Zero Trust security on AWS EK
 ### Full Documentation
 👉 [docs/PHASE7-SECURITY.md](docs/PHASE7-SECURITY.md)
 
-
 ---
 
 ## ⚡ Phase 8 — Observability (Prometheus + Grafana + Alertmanager)
@@ -510,9 +567,24 @@ RBAC + Network Policies + Trivy Image Scanning — Zero Trust security on AWS EK
 Full monitoring stack on AWS EKS — Prometheus + Grafana + Alertmanager via Helm.
 
 ### Why
-- Prometheus = metrics collection from all pods and nodes
-- Grafana = real-time dashboards with Kubernetes visibility
-- Alertmanager = alert routing when something goes wrong
+```
+Without Observability:
+  App is slow → no idea why, when, or what happened
+
+With Observability:
+  Prometheus: collects metrics from all 31 targets every 15 seconds
+  Grafana: dashboards show CPU, Memory, Pod health in real-time
+  Alertmanager: routes alerts when thresholds are breached
+```
+
+### Key Metrics
+```
+Cluster CPU:          3.23%
+Cluster Memory:       54.2%
+studentsphere CPU:    0.565%
+studentsphere Memory: 74.1%
+Prometheus Targets:   31 UP
+```
 
 ### Output / Proof
 
@@ -537,16 +609,44 @@ Full monitoring stack on AWS EKS — Prometheus + Grafana + Alertmanager via Hel
 ### Monitoring Stack Repo
 👉 [monitoring-observability-stack](https://github.com/manesaurabh1704-devops/monitoring-observability-stack)
 
+---
+
+## ⚡ Phase 9 — Multi-Cloud (Azure AKS + GCP GKE)
+
+### What
+Same StudentSphere app deployed on Azure AKS and GCP GKE — proving cloud-agnostic Kubernetes skills.
+
+### Why
+```
+Single cloud = vendor lock-in risk
+Multi-cloud = flexibility + resilience + cost optimization
+
+Same Docker images + same K8s manifests → works on any cloud
+Only the cluster endpoint and storage class change
+```
+
+### Output / Proof
+
+#### Azure AKS — App Running
+![Azure AKS](screenshots/phase9/01-azure-aks-pods.png)
+
+#### GCP GKE — App Running
+![GCP GKE](screenshots/phase9/02-gcp-gke-pods.png)
+
+### Full Documentation
+👉 [docs/PHASE9-MULTI-CLOUD.md](docs/PHASE9-MULTI-CLOUD.md)
+
+---
 
 ## 🔗 Related Repositories
 
 | Repository | Purpose |
 |---|---|
-| [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup) | Pure Kubernetes — Deployment, Service, Ingress, HPA, RBAC |
+| [kubernetes-production-setup](https://github.com/manesaurabh1704-devops/kubernetes-production-setup) | All K8s manifests — Deployment, Service, HPA, RBAC, Network Policies |
 | [terraform-multi-cloud-infra](https://github.com/manesaurabh1704-devops/terraform-multi-cloud-infra) | AWS + Azure + GCP Infrastructure as Code |
-| [ci-cd-devops-pipelines](https://github.com/manesaurabh1704-devops/ci-cd-devops-pipelines) | Jenkins pipelines + GitHub Actions + Trivy |
+| [ci-cd-devops-pipelines](https://github.com/manesaurabh1704-devops/ci-cd-devops-pipelines) | Jenkins pipelines + Trivy scanning |
 | [monitoring-observability-stack](https://github.com/manesaurabh1704-devops/monitoring-observability-stack) | Prometheus + Grafana + Alertmanager |
-| [devops-security-secrets](https://github.com/manesaurabh1704-devops/devops-security-secrets) | RBAC + Network Policies + Secrets + Trivy |
+| [devops-security-secrets](https://github.com/manesaurabh1704-devops/devops-security-secrets) | RBAC + Network Policies + Trivy |
 
 ---
 
