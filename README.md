@@ -472,6 +472,36 @@ ArgoCD watches GitHub repo — automatically deploys to EKS on every git push.
 ### Full Documentation
 👉 [docs/PHASE6-ARGOCD.md](docs/PHASE6-ARGOCD.md)
 
+---
+
+## ⚡ Phase 7 — Security (Zero Trust Approach)
+
+### What
+RBAC + Network Policies + Trivy Image Scanning — Zero Trust security on AWS EKS.
+
+### Why
+- RBAC = Least privilege access for every pod
+- Network Policies = Pod-to-pod firewall rules
+- Trivy = Vulnerability scanning before deployment
+
+### Output / Proof
+
+#### RBAC — Roles and Bindings
+![RBAC](screenshots/phase7/01-rbac.png)
+
+#### Network Policies
+![Network Policies](screenshots/phase7/02-network-policies.png)
+
+#### Trivy Backend Scan
+![Backend Scan](screenshots/phase7/03-trivy-backend-scan.png)
+
+#### Trivy Frontend Scan
+![Frontend Scan](screenshots/phase7/04-trivy-frontend-scan.png)
+
+### Full Documentation
+👉 [docs/PHASE7-SECURITY.md](docs/PHASE7-SECURITY.md)
+
+
 
 ## 🔗 Related Repositories
 
