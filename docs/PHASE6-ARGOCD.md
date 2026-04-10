@@ -1,43 +1,49 @@
 # Phase 6 — GitOps with ArgoCD
 
-> Automated deployment from GitHub to AWS EKS using ArgoCD.
+> Automated deployment from GitHub to AWS EKS using ArgoCD v3.3.6.
+> Git push = automatic deploy — no manual kubectl apply needed.
 > Part of [multi-cloud-devops-studentsphere](https://github.com/manesaurabh1704-devops/multi-cloud-devops-studentsphere)
 
 ---
 
-## What is GitOps?
+## 🎯 What is GitOps?
 
 ```
 Traditional:  Developer → kubectl apply → Cluster
+              Problem: Manual + error-prone + no audit trail
+
 GitOps:       Developer → git push → ArgoCD detects → Auto deploy → Cluster
+              Benefit:  Automated + auditable + self-healing
 ```
 
 ---
 
-## What is ArgoCD?
+## 🔧 What is ArgoCD?
 
 ArgoCD is a declarative GitOps continuous delivery tool for Kubernetes.
 It watches a GitHub repository and automatically syncs changes to the cluster.
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ```
 GitHub Repository (k8s/aws/)
         ↓
-    ArgoCD watches for changes
+    ArgoCD watches for changes (every 3 minutes)
         ↓
     Change detected in main branch
         ↓
     ArgoCD auto-syncs to EKS
         ↓
     Kubernetes resources updated
+        ↓
+    Health status → Healthy ✅
 ```
 
 ---
 
-## Why ArgoCD?
+## 🆚 Why ArgoCD?
 
 | Without ArgoCD | With ArgoCD |
 |---|---|
@@ -49,7 +55,7 @@ GitHub Repository (k8s/aws/)
 
 ---
 
-## How to Setup ArgoCD
+## ⚡ How to Setup ArgoCD
 
 ### Prerequisites
 ```bash
@@ -86,6 +92,15 @@ argocd-redis-xxxx                                  1/1     Running
 argocd-repo-server-xxxx                            1/1     Running
 argocd-server-xxxx                                 1/1     Running
 ```
+
+> **Note:** If some pods are Pending, scale up node group:
+> ```bash
+> eksctl scale nodegroup \
+>   --cluster studentsphere-cluster \
+>   --name studentsphere-nodes \
+>   --nodes 3 \
+>   --region ap-south-1
+> ```
 
 ### Step 3 — Expose ArgoCD UI
 
@@ -162,19 +177,19 @@ studentsphere   Synced        Healthy
 
 ---
 
-## How Auto-Sync Works
+## 🔄 How Auto-Sync Works
 
 ```
 1. Developer makes change in k8s/aws/ folder
 2. git push to main branch
 3. ArgoCD detects change (polls every 3 minutes)
 4. ArgoCD applies changes to EKS cluster
-5. Health status updates to Healthy
+5. Health status updates to Healthy ✅
 ```
 
 ---
 
-## Output / Proof
+## 📸 Output / Proof
 
 ### ArgoCD Dashboard
 ![ArgoCD Dashboard](../screenshots/phase6/01-argocd-dashboard.png)
@@ -190,7 +205,7 @@ studentsphere   Synced        Healthy
 
 ---
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Problem 1 — ArgoCD Pods Pending
 ```
@@ -216,6 +231,8 @@ kubectl rollout restart deployment argocd-dex-server -n argocd
 ```
 Error: SYNC STATUS: OutOfSync
 
+Root Cause: Files in GitHub don't match cluster state
+
 Fix: Force sync
 kubectl patch app studentsphere -n argocd \
   -p '{"operation": {"initiatedBy": {"username": "admin"}, "sync": {"revision": "HEAD"}}}' \
@@ -226,14 +243,26 @@ kubectl patch app studentsphere -n argocd \
 ```
 Error: invalid username or password
 
-Fix: Reset admin password
-kubectl -n argocd patch secret argocd-secret \
-  -p '{"stringData": {"admin.password": "$2a$10$..."} }'
+Fix: Get fresh admin password
+kubectl -n argocd get secret argocd-initial-admin-secret \
+  -o jsonpath="{.data.password}" | base64 -d && echo
+```
+
+### Problem 5 — ArgoCD Keeps Re-creating Deleted Resources
+```
+Error: Deleted deployment keeps coming back
+
+Root Cause: selfHeal: true — ArgoCD restores cluster to match GitHub
+
+Fix: Disable auto-sync temporarily
+kubectl patch app studentsphere -n argocd \
+  -p '{"spec":{"syncPolicy":{"automated":null}}}' \
+  --type merge
 ```
 
 ---
 
-## Related Repositories
+## 🔗 Related Repositories
 
 | Repository | Purpose |
 |---|---|
@@ -244,7 +273,7 @@ kubectl -n argocd patch secret argocd-secret \
 
 ---
 
-## Author
+## 👨‍💻 Author
 **Saurabh Mane** — DevOps Engineer
 - GitHub: [@manesaurabh1704-devops](https://github.com/manesaurabh1704-devops)
 
