@@ -177,16 +177,16 @@ studentsphere   Synced        Healthy
 ## Output / Proof
 
 ### ArgoCD Dashboard
-![ArgoCD Dashboard](screenshots/phase6/01-argocd-dashboard.png)
+![ArgoCD Dashboard](../screenshots/phase6/01-argocd-dashboard.png)
 
 ### Application Detail Tree
-![App Detail](screenshots/phase6/02-argocd-app-detail.png)
+![App Detail](../screenshots/phase6/02-argocd-app-detail.png)
 
 ### Application Synced
-![Synced](screenshots/phase6/03-argocd-synced.png)
+![Synced](../screenshots/phase6/03-argocd-synced.png)
 
 ### Sync Status
-![Sync Status](screenshots/phase6/04-argocd-sync-status.png)
+![Sync Status](../screenshots/phase6/04-argocd-sync-status.png)
 
 ---
 
