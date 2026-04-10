@@ -502,6 +502,41 @@ RBAC + Network Policies + Trivy Image Scanning — Zero Trust security on AWS EK
 👉 [docs/PHASE7-SECURITY.md](docs/PHASE7-SECURITY.md)
 
 
+---
+
+## ⚡ Phase 8 — Observability (Prometheus + Grafana + Alertmanager)
+
+### What
+Full monitoring stack on AWS EKS — Prometheus + Grafana + Alertmanager via Helm.
+
+### Why
+- Prometheus = metrics collection from all pods and nodes
+- Grafana = real-time dashboards with Kubernetes visibility
+- Alertmanager = alert routing when something goes wrong
+
+### Output / Proof
+
+#### Grafana Dashboard
+![Grafana](screenshots/phase8/01-grafana-dashboard.png)
+
+#### Kubernetes Cluster Overview
+![Cluster](screenshots/phase8/02-kubernetes-cluster.png)
+
+#### StudentSphere Pods Metrics
+![Pods](screenshots/phase8/03-studentsphere-pods.png)
+
+#### Prometheus Targets — All UP
+![Targets](screenshots/phase8/04-prometheus-targets.png)
+
+#### Alertmanager
+![Alertmanager](screenshots/phase8/06-alertmanager.png)
+
+### Full Documentation
+👉 [docs/PHASE8-OBSERVABILITY.md](docs/PHASE8-OBSERVABILITY.md)
+
+### Monitoring Stack Repo
+👉 [monitoring-observability-stack](https://github.com/manesaurabh1704-devops/monitoring-observability-stack)
+
 
 ## 🔗 Related Repositories
 
