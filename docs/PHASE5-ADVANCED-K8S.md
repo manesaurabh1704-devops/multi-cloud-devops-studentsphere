@@ -104,7 +104,7 @@ Conditions:
 ```
 
 ### Output / Proof
-![HPA Working](screenshots/phase5/01-hpa-working.png)
+![HPA Working](../screenshots/phase5/01-hpa-working.png)
 
 ---
 
@@ -176,7 +176,7 @@ backend-canary   1/1     1            1          ← Canary (33% traffic)
 ```
 
 ### Output / Proof
-![Canary Deployment](screenshots/phase5/02-canary-deployment.png)
+![Canary Deployment](../screenshots/phase5/02-canary-deployment.png)
 
 ---
 
@@ -251,12 +251,12 @@ kubectl patch svc backend-bg-service -n studentsphere \
 ```
 
 ### Output / Proof
-![Blue-Green Switch](screenshots/phase5/02-blue-green-switch.png)
+![Blue-Green Switch](../screenshots/phase5/02-blue-green-switch.png)
 
 ---
 
 ## 📸 All Deployments Running
-![All Deployments](screenshots/phase5/03-all-deployments.png)
+![All Deployments](../screenshots/phase5/03-all-deployments.png)
 
 ---
 
