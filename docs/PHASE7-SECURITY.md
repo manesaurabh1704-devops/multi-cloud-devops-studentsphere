@@ -1,11 +1,12 @@
 # Phase 7 — Security (Zero Trust Approach)
 
 > RBAC + Network Policies + Trivy Image Scanning on AWS EKS.
+> Zero Trust — every pod, every connection, every image verified.
 > Part of [multi-cloud-devops-studentsphere](https://github.com/manesaurabh1704-devops/multi-cloud-devops-studentsphere)
 
 ---
 
-## What is Zero Trust Security?
+## 🎯 What is Zero Trust Security?
 
 ```
 Traditional: Trust everything inside the cluster
@@ -16,10 +17,11 @@ Zero Trust means:
 - Every pod has minimum required permissions only (RBAC)
 - Every network connection is explicitly allowed (Network Policies)
 - Every image is scanned for vulnerabilities before deployment (Trivy)
+- All credentials stored securely — never hardcoded (Kubernetes Secrets)
 
 ---
 
-## Security Features Implemented
+## 🛡️ Security Features Implemented
 
 | Feature | Tool | Purpose |
 |---|---|---|
@@ -30,7 +32,7 @@ Zero Trust means:
 
 ---
 
-## Feature 1 — RBAC (Role-Based Access Control)
+## 🔐 Feature 1 — RBAC (Role-Based Access Control)
 
 ### What
 RBAC controls which users and services can perform which actions on which resources in Kubernetes.
@@ -38,14 +40,14 @@ RBAC controls which users and services can perform which actions on which resour
 ### Why
 ```
 Without RBAC: Any pod can access any resource — secrets, configs, other pods
-With RBAC:    Each pod has only minimum required permissions
+With RBAC:    Each pod has only minimum required permissions (least privilege)
 ```
 
 ### Architecture
 ```
-ServiceAccount (Identity)
+ServiceAccount (Identity — who is this pod?)
       ↓
-Role (Permissions — what can be done)
+Role (Permissions — what can this pod do?)
       ↓
 RoleBinding (Link SA to Role)
 ```
@@ -120,7 +122,7 @@ frontend-rolebinding   Role/frontend-role
 
 ---
 
-## Feature 2 — Network Policies
+## 🔒 Feature 2 — Network Policies
 
 ### What
 Network Policies define which pods can communicate with which other pods — acting as a firewall inside the cluster.
@@ -128,14 +130,14 @@ Network Policies define which pods can communicate with which other pods — act
 ### Why
 ```
 Without Network Policy:
-  frontend → mariadb directly (INSECURE!)
-  Any pod → Any pod
+  frontend → mariadb directly (INSECURE! — bypasses backend)
+  Any pod  → Any pod (no restrictions)
 
 With Network Policy:
   Internet → frontend (port 80 only)
   frontend → backend (port 8080 only)
   backend  → mariadb (port 3306 only)
-  Everything else → BLOCKED
+  Everything else → BLOCKED ❌
 ```
 
 ### Architecture
@@ -157,7 +159,7 @@ kubectl apply -f k8s/aws/network-policy.yaml
 
 Policies created:
 ```
-default-deny-all          — Block all traffic by default
+default-deny-all          — Block ALL traffic by default
 allow-frontend-ingress    — Allow internet → frontend (port 80)
 allow-frontend-to-backend — Allow frontend → backend (port 8080)
 allow-backend-to-mariadb  — Allow backend → mariadb (port 3306)
@@ -187,7 +189,7 @@ default-deny-all            <none>
 
 ---
 
-## Feature 3 — Trivy Image Scanning
+## 🔍 Feature 3 — Trivy Image Scanning
 
 ### What
 Trivy scans Docker images for known security vulnerabilities (CVEs) before deployment.
@@ -195,7 +197,7 @@ Trivy scans Docker images for known security vulnerabilities (CVEs) before deplo
 ### Why
 ```
 Vulnerable image in production = Security breach risk
-Trivy scan = Detect vulnerabilities early
+Trivy scan = Detect vulnerabilities early — before they reach production
 CI/CD integration = Block deployment if CRITICAL found
 ```
 
@@ -267,14 +269,14 @@ Target: studentsphere-frontend:v2 (alpine 3.19.1)
 
 ---
 
-## Feature 4 — Kubernetes Secrets
+## 🔑 Feature 4 — Kubernetes Secrets
 
 ### What
 Kubernetes Secrets store sensitive data (passwords, tokens) separately from application code.
 
 ### Why
 ```
-Without Secrets: Passwords hardcoded in yaml files (INSECURE!)
+Without Secrets: Passwords hardcoded in yaml files (INSECURE — visible in Git!)
 With Secrets:    Passwords stored encrypted in etcd — injected at runtime
 ```
 
@@ -302,7 +304,7 @@ kubectl get secrets -n studentsphere
 
 ---
 
-## Security Summary
+## ✅ Security Summary
 
 | Security Layer | Status | Tool |
 |---|---|---|
@@ -315,13 +317,15 @@ kubectl get secrets -n studentsphere
 
 ---
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Problem 1 — Network Policy Blocks App Traffic
 ```
 Error: App not accessible after network policy applied
 
-Fix: Check if allow-frontend-ingress policy exists
+Root Cause: default-deny-all blocks everything including app traffic
+
+Fix: Check if all allow policies exist
 kubectl get networkpolicies -n studentsphere
 kubectl describe networkpolicy allow-frontend-ingress -n studentsphere
 ```
@@ -343,9 +347,18 @@ Fix: Check role has correct verbs
 kubectl describe role backend-role -n studentsphere
 ```
 
+### Problem 4 — Trivy DB Update Slow
+```
+Error: Downloading vulnerability DB... (takes long)
+
+Fix: Use cached DB
+trivy image --skip-db-update your-image:tag
+# After first download, DB is cached for 12 hours
+```
+
 ---
 
-## Related Repositories
+## 🔗 Related Repositories
 
 | Repository | Purpose |
 |---|---|
@@ -355,7 +368,7 @@ kubectl describe role backend-role -n studentsphere
 
 ---
 
-## Author
+## 👨‍💻 Author
 **Saurabh Mane** — DevOps Engineer
 - GitHub: [@manesaurabh1704-devops](https://github.com/manesaurabh1704-devops)
 
