@@ -426,10 +426,18 @@ HPA auto-scaling + Canary deployment + Blue-Green zero downtime deployment on AW
 - Canary = safely test new versions on small traffic
 - Blue-Green = instant switch with zero downtime
 
-### Output / Proof
+
+#### HPA Working — Auto Scaling
 ![HPA Working](screenshots/phase5/01-hpa-working.png)
+
+#### Canary Deployment
+![Canary Deployment](screenshots/phase5/02-canary-deployment.png)
+
+#### Blue-Green Switch
 ![Blue-Green Switch](screenshots/phase5/02-blue-green-switch.png)
-![All Deployments](screenshots/phase5/03-all-deployments.png)
+
+#### All Deployments Running
+![All Deployments](screenshots/phase5/03-all-deployments.png)"""
 
 ### Full Documentation
 👉 [docs/PHASE5-ADVANCED-K8S.md](docs/PHASE5-ADVANCED-K8S.md)
