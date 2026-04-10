@@ -1,11 +1,12 @@
 # Phase 8 — Observability (Prometheus + Grafana + Alertmanager)
 
-> Full monitoring stack for StudentSphere on AWS EKS.
+> Full monitoring stack for StudentSphere on AWS EKS via Helm.
+> Real-time metrics + dashboards + alerts = full production visibility.
 > Part of [multi-cloud-devops-studentsphere](https://github.com/manesaurabh1704-devops/multi-cloud-devops-studentsphere)
 
 ---
 
-## What is Observability?
+## 🎯 What is Observability?
 
 ```
 Without Observability: App is slow — no idea why, when, or what happened
@@ -21,7 +22,7 @@ Alerts     → Alertmanager (notify when something goes wrong)
 
 ---
 
-## Stack Used
+## 🛠️ Stack Used
 
 | Tool | Purpose |
 |---|---|
@@ -33,29 +34,29 @@ Alerts     → Alertmanager (notify when something goes wrong)
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ```
 Kubernetes Cluster (AWS EKS)
     │
-    ├── node-exporter (per node)
-    ├── kube-state-metrics
-    ├── studentsphere pods
+    ├── node-exporter (per node)     ← CPU, Memory, Disk per node
+    ├── kube-state-metrics           ← Pod, Deployment, Service metrics
+    ├── studentsphere pods           ← App metrics
     └── all namespaces
             │
             ▼
         Prometheus
-     (collect + store)
+     (collect + store every 15s)
             │
     ┌───────┴───────┐
     │               │
  Grafana      Alertmanager
-(dashboards)   (alerts)
+(dashboards)   (alert routing)
 ```
 
 ---
 
-## How to Install
+## ⚡ How to Install
 
 ### Prerequisites
 ```bash
@@ -69,6 +70,12 @@ kubectl get nodes
 helm repo add prometheus-community \
   https://prometheus-community.github.io/helm-charts
 helm repo update
+```
+
+Expected output:
+```
+"prometheus-community" has been added to your repositories
+Update Complete. Happy Helming!
 ```
 
 ### Step 2 — Install kube-prometheus-stack
@@ -153,7 +160,7 @@ namespace dropdown → select "studentsphere"
 
 ---
 
-## Key Metrics Observed
+## 📊 Key Metrics Observed
 
 | Metric | Value | Description |
 |---|---|---|
@@ -167,7 +174,7 @@ namespace dropdown → select "studentsphere"
 
 ---
 
-## Output / Proof
+## 📸 Output / Proof
 
 ### Grafana Dashboard List
 ![Grafana Dashboard](../screenshots/phase8/01-grafana-dashboard.png)
@@ -189,7 +196,7 @@ namespace dropdown → select "studentsphere"
 
 ---
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
 ### Problem 1 — Pods Pending After Install
 ```
@@ -228,11 +235,21 @@ Error: Connection refused
 
 Fix: Check LoadBalancer status
 kubectl get svc prometheus-grafana -n monitoring
+# Wait for EXTERNAL-IP to be assigned
+```
+
+### Problem 5 — Prometheus Target Shows DOWN
+```
+Error: Target health = DOWN
+
+Fix: Check target endpoint is accessible
+kubectl get svc -n studentsphere
+kubectl get pods -n studentsphere
 ```
 
 ---
 
-## Related Repositories
+## 🔗 Related Repositories
 
 | Repository | Purpose |
 |---|---|
@@ -242,7 +259,7 @@ kubectl get svc prometheus-grafana -n monitoring
 
 ---
 
-## Author
+## 👨‍💻 Author
 **Saurabh Mane** — DevOps Engineer
 - GitHub: [@manesaurabh1704-devops](https://github.com/manesaurabh1704-devops)
 
