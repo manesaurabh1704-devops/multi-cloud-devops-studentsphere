@@ -116,7 +116,7 @@ frontend-rolebinding   Role/frontend-role
 ### Output / Proof
 
 #### RBAC Resources
-![RBAC](screenshots/phase7/01-rbac.png)
+![RBAC](../screenshots/phase7/01-rbac.png)
 
 ---
 
@@ -183,7 +183,7 @@ default-deny-all            <none>
 ### Output / Proof
 
 #### Network Policies Applied
-![Network Policies](screenshots/phase7/02-network-policies.png)
+![Network Policies](../screenshots/phase7/02-network-policies.png)
 
 ---
 
@@ -260,10 +260,10 @@ Target: studentsphere-frontend:v2 (alpine 3.19.1)
 ### Output / Proof
 
 #### Backend Trivy Scan
-![Backend Scan](screenshots/phase7/03-trivy-backend-scan.png)
+![Backend Scan](../screenshots/phase7/03-trivy-backend-scan.png)
 
 #### Frontend Trivy Scan
-![Frontend Scan](screenshots/phase7/04-trivy-frontend-scan.png)
+![Frontend Scan](../screenshots/phase7/04-trivy-frontend-scan.png)
 
 ---
 
