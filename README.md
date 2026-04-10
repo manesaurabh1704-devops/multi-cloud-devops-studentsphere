@@ -414,6 +414,26 @@ ECR Repositories (2) + Lifecycle Policies (2)
 ### Full Terraform Code
 👉 [terraform-multi-cloud-infra](https://github.com/manesaurabh1704-devops/terraform-multi-cloud-infra)
 
+---
+
+## ⚡ Phase 5 — Advanced Kubernetes Features
+
+### What
+HPA auto-scaling + Canary deployment + Blue-Green zero downtime deployment on AWS EKS.
+
+### Why
+- HPA = app automatically scales with load
+- Canary = safely test new versions on small traffic
+- Blue-Green = instant switch with zero downtime
+
+### Output / Proof
+![HPA Working](screenshots/phase5/01-hpa-working.png)
+![Blue-Green Switch](screenshots/phase5/02-blue-green-switch.png)
+![All Deployments](screenshots/phase5/03-all-deployments.png)
+
+### Full Documentation
+👉 [docs/PHASE5-ADVANCED-K8S.md](docs/PHASE5-ADVANCED-K8S.md)
+
 ## 🔗 Related Repositories
 
 | Repository | Purpose |
