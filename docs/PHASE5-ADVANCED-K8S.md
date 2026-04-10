@@ -1,7 +1,17 @@
 # Phase 5 — Advanced Kubernetes Features
 
-> HPA + Canary + Blue-Green Deployment on AWS EKS
+> HPA + Canary + Blue-Green Deployment on AWS EKS.
+> Production-grade deployment strategies for zero-downtime releases.
 > Part of [multi-cloud-devops-studentsphere](https://github.com/manesaurabh1704-devops/multi-cloud-devops-studentsphere)
+
+---
+
+## 🎯 Why Advanced K8s?
+
+```
+Basic K8s (Phase 2):  App deployed — but fixed replicas, manual deploys, risky updates
+Advanced K8s (Phase 5): Auto-scale + safe releases + zero downtime = production-ready
+```
 
 ---
 
@@ -319,4 +329,4 @@ kubectl scale deployment backend --replicas=2 -n studentsphere
 
 ## 👨‍💻 Author
 **Saurabh Mane** — DevOps Engineer
-- GitHub: [@manesaurabh1704-devops](https://github.com/manesaurabh1704-devops) 
+- GitHub: [@manesaurabh1704-devops](https://github.com/manesaurabh1704-devops)
