@@ -442,6 +442,37 @@ HPA auto-scaling + Canary deployment + Blue-Green zero downtime deployment on AW
 ### Full Documentation
 👉 [docs/PHASE5-ADVANCED-K8S.md](docs/PHASE5-ADVANCED-K8S.md)
 
+---
+
+## ⚡ Phase 6 — GitOps with ArgoCD
+
+### What
+ArgoCD watches GitHub repo — automatically deploys to EKS on every git push.
+
+### Why
+- No manual kubectl apply needed
+- Git is single source of truth
+- Auto self-heal if cluster drifts
+- Full visibility via UI
+
+### Output / Proof
+
+#### ArgoCD Dashboard
+![ArgoCD Dashboard](screenshots/phase6/01-argocd-dashboard.png)
+
+#### Application Detail Tree
+![App Detail](screenshots/phase6/02-argocd-app-detail.png)
+
+#### Application Synced
+![App Synced](screenshots/phase6/03-argocd-synced.png)
+
+#### Sync Status
+![Sync Status](screenshots/phase6/04-argocd-sync-status.png)
+
+### Full Documentation
+👉 [docs/PHASE6-ARGOCD.md](docs/PHASE6-ARGOCD.md)
+
+
 ## 🔗 Related Repositories
 
 | Repository | Purpose |
