@@ -382,6 +382,37 @@ GitHub Push → Jenkins → Maven Build → npm Build → Trivy Scan → Docker 
 ### Full Pipeline Setup Guide
 👉 [ci-cd-devops-pipelines](https://github.com/manesaurabh1704-devops/ci-cd-devops-pipelines)
 
+---
+
+## ⚡ Phase 4 — Terraform Infrastructure as Code
+
+### What
+Complete AWS infrastructure defined as code using Terraform — VPC, EKS, ECR all provisioned with single command.
+
+### Why
+- Manual eksctl = not reproducible
+- Terraform = version controlled + reproducible + team friendly
+- Same code reusable for Azure and GCP in Phase 9
+- Industry standard IaC tool
+
+### Resources Created (24 total)
+VPC + Subnets (6) + IGW + Route Tables
+EKS Cluster + Node Group + IAM Roles (3)
+ECR Repositories (2) + Lifecycle Policies (2)
+
+### Output / Proof
+
+#### Terraform Init
+![Terraform Init](screenshots/phase4/01-terraform-init.png)
+
+#### Terraform Plan — 24 Resources
+![Terraform Plan](screenshots/phase4/02-terraform-plan.png)
+
+#### GitHub Terraform Files
+![GitHub Files](screenshots/phase4/03-github-terraform-files.png)
+
+### Full Terraform Code
+👉 [terraform-multi-cloud-infra](https://github.com/manesaurabh1704-devops/terraform-multi-cloud-infra)
 
 ## 🔗 Related Repositories
 
