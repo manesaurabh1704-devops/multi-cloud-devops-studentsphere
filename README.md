@@ -87,12 +87,12 @@ multi-cloud-devops-studentsphere/
 | ✅ Phase 1 | Local Docker Setup | Complete |
 | ✅ Phase 2 | AWS EKS Deployment | Complete |
 | ✅ Phase 3 | CI/CD Jenkins | Complete|
-| 🔄 Phase 4 | Terraform IaC | Pending |
-| ⏳ Phase 5 | Advanced K8s (HPA + Canary + Blue-Green) | Pending |
-| ⏳ Phase 6 | GitOps ArgoCD | Pending |
-| ⏳ Phase 7 | Security (RBAC + Trivy + Network Policies) | Pending |
-| ⏳ Phase 8 | Observability (Prometheus + Grafana + EFK) | Pending |
-| ⏳ Phase 9 | Multi-Cloud (Azure AKS + GCP GKE) | Pending |
+| ✅ Phase 4 | Terraform IaC | Complete |
+| ✅ Phase 5 | Advanced K8s (HPA + Canary + Blue-Green) | Complete |
+| ✅ Phase 6 | GitOps ArgoCD | Complete |
+| ✅ Phase 7 | Security (RBAC + Trivy + Network Policies) | Complete |
+| ✅ Phase 8 | Observability (Prometheus + Grafana + EFK) | Complete |
+| 🔄 Phase 9 | Multi-Cloud (Azure AKS + GCP GKE) | Pending |
 
 ---
 
