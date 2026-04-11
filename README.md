@@ -611,34 +611,7 @@ Prometheus Targets:   31 UP
 
 ---
 
-## ⚡ Phase 9 — Multi-Cloud (Azure AKS + GCP GKE)
-
-### What
-Same StudentSphere app deployed on Azure AKS and GCP GKE — proving cloud-agnostic Kubernetes skills.
-
-### Why
-```
-Single cloud = vendor lock-in risk
-Multi-cloud = flexibility + resilience + cost optimization
-
-Same Docker images + same K8s manifests → works on any cloud
-Only the cluster endpoint and storage class change
-```
-
-### Output / Proof
-
-#### Azure AKS — App Running
-![Azure AKS](screenshots/phase9/01-azure-aks-pods.png)
-
-#### GCP GKE — App Running
-![GCP GKE](screenshots/phase9/02-gcp-gke-pods.png)
-
-### Full Documentation
-👉 [docs/PHASE9-MULTI-CLOUD.md](docs/PHASE9-MULTI-CLOUD.md)
-
----
-
-## ⚡ Phase 9 — Azure AKS Deployment
+## ⚡ Phase 9 — (Multi-Cloud) Azure AKS Deployment
 
 ### What
 StudentSphere deployed on Microsoft Azure AKS — production-grade multi-cloud setup.
