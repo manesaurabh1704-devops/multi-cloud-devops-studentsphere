@@ -652,6 +652,34 @@ Internet → Azure Load Balancer (Public Subnet)
 
 ---
 
+## ⚡ Phase 10 — GCP GKE Deployment
+
+### What
+StudentSphere deployed on Google Cloud Platform GKE — production-grade multi-cloud setup.
+
+### Why
+- Google invented Kubernetes — best-in-class GKE
+- Private nodes + Cloud NAT = FAANG-style security
+- Same K8s manifests as AWS + Azure — cloud-agnostic!
+
+### Output / Proof
+
+#### GCP GKE Nodes Ready
+![GKE Nodes](screenshots/phase10/01-gcp-gke-nodes.png)
+
+#### All Pods Running on GCP
+![GKE Pods](screenshots/phase10/02-gcp-gke-pods.png)
+
+#### App Running on GCP
+![App Running](screenshots/phase10/03-gcp-app-running.png)
+
+#### Student Registered on GCP
+![Student Registered](screenshots/phase10/04-gcp-student-registered.png)
+
+### Full Documentation
+👉 [docs/PHASE10-GCP-GKE.md](docs/PHASE10-GCP-GKE.md)
+---
+
 ## 🔗 Related Repositories
 
 | Repository | Purpose |
