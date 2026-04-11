@@ -638,6 +638,47 @@ Only the cluster endpoint and storage class change
 
 ---
 
+## ⚡ Phase 9 — Azure AKS Deployment
+
+### What
+StudentSphere deployed on Microsoft Azure AKS — production-grade multi-cloud setup.
+
+### Why
+- Multi-cloud = no vendor lock-in
+- Private nodes + NAT Gateway = FAANG-style security
+- Same K8s manifests as AWS — cloud-agnostic design
+
+### Architecture
+```
+Internet → Azure Load Balancer (Public Subnet)
+               ↓
+         AKS Nodes (Private Subnet + NAT Gateway)
+               ↓
+         Backend + Frontend + MariaDB
+```
+
+### Output / Proof
+
+#### Azure AKS Nodes Ready
+![AKS Nodes](screenshots/phase9/01-azure-aks-nodes.png)
+
+#### All Pods Running on Azure
+![AKS Pods](screenshots/phase9/02-azure-aks-pods.png)
+
+#### App Running on Azure
+![App Running](screenshots/phase9/03-azure-app-running.png)
+
+#### Student Registered on Azure
+![Student Registered](screenshots/phase9/04-azure-student-registered.png)
+
+#### Terraform Apply — 9 Resources
+![Terraform](screenshots/phase9/05-azure-terraform-apply.png)
+
+### Full Documentation
+👉 [docs/PHASE9-AZURE-AKS.md](docs/PHASE9-AZURE-AKS.md)
+
+---
+
 ## 🔗 Related Repositories
 
 | Repository | Purpose |
@@ -649,6 +690,8 @@ Only the cluster endpoint and storage class change
 | [devops-security-secrets](https://github.com/manesaurabh1704-devops/devops-security-secrets) | RBAC + Network Policies + Trivy |
 
 ---
+
+
 
 ## 👨‍💻 Author
 
