@@ -562,6 +562,8 @@ Frontend Image: 20 vulnerabilities (HIGH: 17, CRITICAL: 3)
 ### Full Documentation
 👉 [docs/PHASE7-SECURITY.md](docs/PHASE7-SECURITY.md)
 
+### Security Repo
+👉 [devops-security-secrets](https://github.com/manesaurabh1704-devops/devops-security-secrets)
 ---
 
 ## ⚡ Phase 8 — Observability (Prometheus + Grafana + Alertmanager)
