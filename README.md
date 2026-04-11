@@ -86,12 +86,14 @@ multi-cloud-devops-studentsphere/
 ├── terraform/                  # Infrastructure as Code
 │   ├── aws/                    # AWS VPC + EKS + ECR
 │   ├── azure/                  # Azure AKS (Phase 9)
-│   └── gcp/                    # GCP GKE (Phase 9)
+│   └── gcp/                    # GCP GKE (Phase 10)
 ├── docs/                       # Phase-wise documentation
 │   ├── PHASE5-ADVANCED-K8S.md
 │   ├── PHASE6-ARGOCD.md
 │   ├── PHASE7-SECURITY.md
-│   └── PHASE8-OBSERVABILITY.md
+│   ├── PHASE8-OBSERVABILITY.md
+│   ├── PHASE9-AZURE-AKS.md
+│   └── PHASE10-GCP-GKE.md
 ├── screenshots/                # Phase-wise proof
 ├── .env.example                # Environment variables template
 └── compose.yml                 # Local Docker Compose
@@ -111,7 +113,8 @@ multi-cloud-devops-studentsphere/
 | ✅ Phase 6 | GitOps ArgoCD | Complete |
 | ✅ Phase 7 | Security (RBAC + Trivy + Network Policies) | Complete |
 | ✅ Phase 8 | Observability (Prometheus + Grafana + Alertmanager) | Complete |
-| ✅ Phase 9 | Multi-Cloud (Azure AKS + GCP GKE) | Complete |
+| ✅ Phase 9  | Azure AKS Deployment (Private Nodes + NAT Gateway) | Complete |
+| ✅ Phase 10 | GCP GKE Deployment (Private Nodes + Cloud NAT) | Complete |
 
 ---
 
@@ -678,6 +681,7 @@ StudentSphere deployed on Google Cloud Platform GKE — production-grade multi-c
 
 ### Full Documentation
 👉 [docs/PHASE10-GCP-GKE.md](docs/PHASE10-GCP-GKE.md)
+
 ---
 
 ## 🔗 Related Repositories
